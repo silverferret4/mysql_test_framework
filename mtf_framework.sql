@@ -1,7 +1,7 @@
 #
 # SQL Export
 # Created by Querious (957)
-# Created: March 9, 2015 at 6:08:03 PM CDT
+# Created: March 9, 2015 at 6:22:44 PM CDT
 # Encoding: Unicode (UTF-8)
 #
 
@@ -47,6 +47,7 @@ CREATE TABLE `mtf_version` (
 
 
 
+DROP PROCEDURE IF EXISTS `mtf_template_testsuite`;
 DROP PROCEDURE IF EXISTS `mtf_template_test`;
 DROP PROCEDURE IF EXISTS `mtf_sp_str_not_equal`;
 DROP PROCEDURE IF EXISTS `mtf_sp_str_equal`;
@@ -449,6 +450,34 @@ BEGIN
 	* SIGNAL test_pass SET SUBCLASS_ORIGIN = @t_test_description;
 	*
 	*/
+
+END;
+//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `mtf_template_testsuite`()
+    DETERMINISTIC
+    COMMENT 'This procedure is meant as a template to be used as the basis for all testsuites that are written.'
+BEGIN
+
+	-- Begin by deleteing results of previous tests.
+	DELETE FROM mtf_result;
+	
+	
+	
+	-- Now execute the following tests.
+	
+	CALL test_1;
+	CALL test_2;
+	CALL test_3;
+	
+	
+	
+	-- Finally, output a manifest of the test results.
+	SELECT	*
+	FROM		mtf_result;
 
 END;
 //
